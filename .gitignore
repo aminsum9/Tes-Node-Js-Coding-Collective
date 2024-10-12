@@ -1,2 +1,10 @@
 .env
 /node_modules
+
+/images/check_in/*.jpg
+/images/check_in/*.jpeg
+/images/check_in/*.png
+
+/images/check_out/*.jpg
+/images/check_out/*.jpeg
+/images/check_out/*.png

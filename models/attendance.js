@@ -31,34 +31,58 @@ Attendance.init({
           key: 'id'
         }
     },
-    date: {
+    check_in_date: {
         type: DataTypes.DATE
     },
-    check_in: {
+    check_in_time: {
         type: DataTypes.TIME
     },
-    check_out: {
+    check_in_photo: {
+        type: DataTypes.STRING
+    },
+    check_in_ip_address: {
+        type: DataTypes.STRING
+    },
+    check_in_location: {
+        type: DataTypes.STRING
+    },
+    check_in_gmt: {
+        type: DataTypes.STRING
+    },
+    check_in_longitude: {
+        type: DataTypes.STRING
+    },
+    check_in_latitude: {
+        type: DataTypes.STRING
+    },
+    check_in_desc: {
+        type: DataTypes.TEXT
+    },
+    check_out_date: {
+        type: DataTypes.DATE
+    },
+    check_out_time: {
         type: DataTypes.TIME
     },
-    photo: {
+    check_out_photo: {
         type: DataTypes.STRING
     },
-    ip_address: {
+    check_out_ip_address: {
         type: DataTypes.STRING
     },
-    location: {
+    check_out_location: {
         type: DataTypes.STRING
     },
-    gmt: {
+    check_out_gmt: {
         type: DataTypes.STRING
     },
-    longitude: {
+    check_out_longitude: {
         type: DataTypes.STRING
     },
-    latitude: {
+    check_out_latitude: {
         type: DataTypes.STRING
     },
-    desc: {
+    check_out_desc: {
         type: DataTypes.TEXT
     },
     created_at: {
