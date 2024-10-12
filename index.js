@@ -52,7 +52,8 @@ app.group('/api', (router) => {
     });
     
 	router.group('/attendance', (router) => {
-		router.post('/',authMiddleware,new attendanceController().getAttendancesByUser);
+		router.get('/',authMiddleware,new attendanceController().getAttendancesByUser);
+		router.post('/check-check-in',authMiddleware,new attendanceController().checkCheckIn);
         router.post('/check-in', authMiddleware, uploadCheckIn.single('photo'), new attendanceController().checkIn);
 		router.post('/check-out',authMiddleware, uploadCheckOut.single('photo'),new attendanceController().checkOut);
     });

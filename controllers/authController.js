@@ -386,6 +386,26 @@ class AuthController {
         }
     };
 
+    logout = async (req, res) => {
+
+        var updateUser = await User.update({token: ''},{where: {id: req.user.id}});
+        
+        if (updateUser) {
+
+            res.send({
+                success: true,
+                message: 'User success logout',
+                data:  {}
+            });
+        } else {
+            res.status(500).json({
+                success: false,
+                message: 'Logout user failed!',
+                data: {}
+            });
+        }
+    };
+
 }
 
 export default AuthController;

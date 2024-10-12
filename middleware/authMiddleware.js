@@ -30,7 +30,7 @@ const authMiddleware = (req, res, next) => {
         userId = decoded.id;
 
         var checkUser = await User.findOne({
-            where: { id: userId }, attributes: {
+            where: { id: userId, token: token }, attributes: {
                 exclude: ['token','password','user_id', 'created_at', 'updated_at'],
                 include: [
                     'id',

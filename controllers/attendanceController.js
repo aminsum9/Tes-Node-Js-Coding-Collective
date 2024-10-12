@@ -17,20 +17,67 @@ const deleteFile = (path) => {
 class AttendanceController {
 
     getAttendancesByUser = async (req, res) => {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = limit * ((page == 0 ? 1 : page) - 1);
 
-        var data = await Attendance.findAll({where: {user_id: req.user.id}});
+        const totalData = await Attendance.count({
+            where:{user_id: req.user.id}
+        }); 
+
+        const totalPage = Math.ceil(totalData / limit);
+
+        var data = await Attendance.findAll({
+            where: {user_id: req.user.id},
+            offset: offset,
+            limit: limit,
+            order:[
+                ['id', 'DESC']
+            ]
+        });
 
         if(data){
             res.send({
                 success: true,
                 message: 'Success get data user attendances',
-                data: data
+                data: {
+                    data: data,
+                    page: page,
+                    limit: limit,
+                    totalData: totalData,
+                    totalPage: totalPage
+                }
     
             });
         } else {
             res.send({
                 success: false,
                 message: 'Failed get data user attendances!',
+                data: {}
+    
+            });
+        }
+      
+    };
+
+    checkCheckIn = async (req, res) => {
+
+        var shift_id = req.body.shift_id;
+        var today = moment(new Date).format('YYYY-MM-DD');
+
+        var checkCheckIn = await Attendance.findOne({where: {user_id: req.user.id, shift_id: shift_id, check_in_date: today}});
+
+        if(checkCheckIn){
+            res.send({
+                success: true,
+                message: 'User already check in',
+                data: data
+    
+            });
+        } else {
+            res.send({
+                success: false,
+                message: 'User has not checked in!',
                 data: {}
     
             });
