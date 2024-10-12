@@ -49,6 +49,7 @@ app.group('/api', (router) => {
 		router.post('/check-login',authMiddleware,new authController().checkLogin);
 		router.post('/update',authMiddleware,new authController().update);
 		router.post('/change-password',authMiddleware,new authController().changePassword);
+		router.post('/logout',authMiddleware,new authController().logout);
     });
     
 	router.group('/attendance', (router) => {
