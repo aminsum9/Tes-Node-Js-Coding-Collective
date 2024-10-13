@@ -18,6 +18,7 @@ import attendanceAdminController from "./controllers/admin/attendanceController.
 import shiftAdminController from "./controllers/admin/shiftController.js";
 import reportController from "./controllers/admin/reportController.js";
 import adminMiddleware from './middleware/adminMiddleware.js';
+import adminWebMiddleware from './middleware/adminWebMiddleware.js';
 
 const app = express();
 
@@ -100,7 +101,7 @@ app.group('/api', (router) => {
 
     router.group('/report', (router) => {
         router.get('/', adminMiddleware, new reportController().report);
-        router.get('/download', new reportController().downloadPDF);
+        router.get('/download', adminWebMiddleware, new reportController().downloadPDF);
     });
 
 });
