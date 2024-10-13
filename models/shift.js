@@ -29,7 +29,7 @@ Shift.init({
     location: {
         type: DataTypes.STRING
     },
-    gmt: {
+    timezone: {
         type: DataTypes.STRING
     },
     longitude: {

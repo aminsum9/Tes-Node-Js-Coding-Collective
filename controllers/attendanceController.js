@@ -33,7 +33,11 @@ class AttendanceController {
             limit: limit,
             order:[
                 ['id', 'DESC']
-            ]
+            ],
+            include: {
+                model: Shift,
+                as: "shift"
+            }
         });
 
         if(data){
@@ -92,7 +96,7 @@ class AttendanceController {
         var date = req.body.date;
         var check_in = req.body.check_in;
         var location = req.body.location;
-        var gmt = req.body.gmt;
+        var timezone = req.body.timezone;
         var longitude = req.body.longitude;
         var latitude = req.body.latitude;
         var desc = req.body.desc;
@@ -148,11 +152,11 @@ class AttendanceController {
                 data: {}
             });
         }
-        if (!gmt) {
+        if (!timezone) {
             deleteFile(photo.path);
             return res.status(500).json({
                 success: false,
-                message: 'gmt required!',
+                message: 'timezone required!',
                 data: {}
             });
         }
@@ -228,7 +232,7 @@ class AttendanceController {
         attendance.check_in_time = check_in;
         attendance.check_in_photo = photo.filename;
         attendance.check_in_location = location;
-        attendance.check_in_gmt = gmt;
+        attendance.check_in_timezone = timezone;
         attendance.check_in_longitude = longitude;
         attendance.check_in_latitude = latitude;
         attendance.check_in_desc = desc;
@@ -258,7 +262,7 @@ class AttendanceController {
         var date = req.body.date;
         var check_out = req.body.check_out;
         var location = req.body.location;
-        var gmt = req.body.gmt;
+        var timezone = req.body.timezone;
         var longitude = req.body.longitude;
         var latitude = req.body.latitude;
         var desc = req.body.desc;
@@ -328,11 +332,11 @@ class AttendanceController {
                 data: {}
             });
         }
-        if (!gmt) {
+        if (!timezone) {
             deleteFile(photo.path);
             return res.status(500).json({
                 success: false,
-                message: 'gmt required!',
+                message: 'timezone required!',
                 data: {}
             });
         }
@@ -418,7 +422,7 @@ class AttendanceController {
             check_out_date: date,
             check_out_photo: photo.filename,
             check_out_time: check_out,
-            check_out_gmt: gmt,
+            check_out_timezone: timezone,
             check_out_location: location,
             check_out_longitude: longitude,
             check_out_latitude: latitude,

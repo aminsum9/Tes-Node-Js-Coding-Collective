@@ -10,6 +10,7 @@ import path, { dirname } from 'path';
 
 import authController from "./controllers/authController.js";
 import attendanceController from "./controllers/attendanceController.js";
+import shiftController from "./controllers/shiftController.js";
 import authMiddleware from './middleware/authMiddleware.js';
 
 const app = express();
@@ -68,6 +69,10 @@ app.group('/api', (router) => {
 		router.post('/check-attendance',authMiddleware,new attendanceController().checkAttendance);
         router.post('/check-in', authMiddleware, uploadCheckIn.single('photo'), new attendanceController().checkIn);
 		router.post('/check-out',authMiddleware, uploadCheckOut.single('photo'),new attendanceController().checkOut);
+    });
+
+	router.group('/shift', (router) => {
+		router.get('/',authMiddleware,new shiftController().getShifts);
     });
     
 });

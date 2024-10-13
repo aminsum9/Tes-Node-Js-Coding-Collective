@@ -46,7 +46,7 @@ Attendance.init({
     check_in_location: {
         type: DataTypes.STRING
     },
-    check_in_gmt: {
+    check_in_timezone: {
         type: DataTypes.STRING
     },
     check_in_longitude: {
@@ -73,7 +73,7 @@ Attendance.init({
     check_out_location: {
         type: DataTypes.STRING
     },
-    check_out_gmt: {
+    check_out_timezone: {
         type: DataTypes.STRING
     },
     check_out_longitude: {
