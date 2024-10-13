@@ -60,14 +60,15 @@ class AttendanceController {
       
     };
 
-    checkCheckIn = async (req, res) => {
+    checkAttendance = async (req, res) => {
 
-        var shift_id = req.body.shift_id;
         var today = moment(new Date).format('YYYY-MM-DD');
 
-        var checkCheckIn = await Attendance.findOne({where: {user_id: req.user.id, shift_id: shift_id, check_in_date: today}});
+        var data = await Attendance.findOne({where: {user_id: req.user.id, check_in_date: new Date(today) }, order: [
+            ['id', 'DESC']
+        ]});
 
-        if(checkCheckIn){
+        if(data){
             res.send({
                 success: true,
                 message: 'User already check in',
