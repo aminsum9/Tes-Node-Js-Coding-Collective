@@ -1,8 +1,8 @@
-import { Attendance, User } from '../models/index.js';
+import { Attendance, User } from '../../models/index.js';
 import fs from "fs";
 import moment from "moment";
 import {config} from 'dotenv';
-import Shift from '../models/shift.js';
+import Shift from '../../models/shift.js';
 import { Op } from 'sequelize';
 
 config();

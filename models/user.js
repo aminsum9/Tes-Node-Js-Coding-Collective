@@ -37,6 +37,10 @@ User.init({
         type: DataTypes.TEXT,
         defaultValue: false
     },
+    role: {
+        type: DataTypes.ENUM('User', 'Admin'),
+        defaultValue: 'User'
+    },
     created_at: {
         type: DataTypes.DATE,
         defaultValue: new Date()

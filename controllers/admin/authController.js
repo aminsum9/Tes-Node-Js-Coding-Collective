@@ -1,11 +1,11 @@
-import { User } from '../models/index.js';
+import { User } from '../../models/index.js';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import {config} from 'dotenv';
+import { config } from 'dotenv';
 
 config();
 
-class AuthController {
+class AuthAdminController {
 
     login = async (req, res) => {
 
@@ -32,6 +32,7 @@ class AuthController {
             .findOne({
                 where: {
                     email: email,
+                    role: 'Admin'
                 },
                 attributes: {
                     exclude: ['user_id', 'created_at', 'updated_at'],
@@ -150,12 +151,13 @@ class AuthController {
 
         user.password = hashingPassword;
         user.is_verify = true;
+        user.role = "Admin";
 
         if (await user.save()) {
             var newUser = await User.findOne({
-                where: { email: email }, 
+                where: { email: email },
                 attributes: {
-                    exclude: ['user_id','password','created_at', 'updated_at'],
+                    exclude: ['user_id', 'password', 'created_at', 'updated_at'],
                     include: [
                         'id',
                         'name',
@@ -188,7 +190,7 @@ class AuthController {
 
         const newToken = jwt.sign({ id: req.user.id }, process.env.JWT_SCREET_KEY);
 
-        User.update({token: newToken},{where: {id: req.user.id}});
+        User.update({ token: newToken }, { where: { id: req.user.id, role: "Admin" } });
 
         res.send({
             success: true,
@@ -232,6 +234,7 @@ class AuthController {
             .findOne({
                 where: {
                     email: email,
+                    role: "Admin"
                 },
                 attributes: {
                     exclude: ['user_id', 'created_at', 'updated_at'],
@@ -256,15 +259,15 @@ class AuthController {
             email: email,
             address: address
         },
-        {
-            where: {id: findUser.id}
-        });
+            {
+                where: { id: findUser.id }
+            });
 
         if (updateUser) {
             var updatedUser = await User.findOne({
-                where: { email: email }, 
+                where: { email: email },
                 attributes: {
-                    exclude: ['user_id','password','created_at', 'updated_at'],
+                    exclude: ['user_id', 'password', 'created_at', 'updated_at'],
                     include: [
                         'id',
                         'name',
@@ -276,7 +279,7 @@ class AuthController {
             res.send({
                 success: true,
                 message: 'Success update user',
-                data:  updatedUser
+                data: updatedUser
             });
         } else {
             res.status(500).json({
@@ -319,6 +322,7 @@ class AuthController {
             .findOne({
                 where: {
                     id: req.user.id,
+                    role: "Admin"
                 },
                 attributes: {
                     exclude: ['user_id', 'created_at', 'updated_at'],
@@ -351,8 +355,7 @@ class AuthController {
         }
 
         // check password == password conf
-        if(newPassword != confPassword)
-        {
+        if (newPassword != confPassword) {
             return res.status(500).json({
                 success: false,
                 message: "Your new password doesn't match with conf password!",
@@ -366,16 +369,16 @@ class AuthController {
         var updateUser = await User.update({
             password: hashingPassword,
         },
-        {
-            where: {id: findUser.id}
-        });
-        
+            {
+                where: { id: findUser.id }
+            });
+
         if (updateUser) {
 
             res.send({
                 success: true,
                 message: 'Success update user password',
-                data:  {}
+                data: {}
             });
         } else {
             res.status(500).json({
@@ -388,14 +391,14 @@ class AuthController {
 
     logout = async (req, res) => {
 
-        var updateUser = await User.update({token: ''},{where: {id: req.user.id}});
-        
+        var updateUser = await User.update({ token: '' }, { where: { id: req.user.id, role: "Admin" } });
+
         if (updateUser) {
 
             res.send({
                 success: true,
                 message: 'User success logout',
-                data:  {}
+                data: {}
             });
         } else {
             res.status(500).json({
@@ -408,5 +411,5 @@ class AuthController {
 
 }
 
-export default AuthController;
+export default AuthAdminController;
 
