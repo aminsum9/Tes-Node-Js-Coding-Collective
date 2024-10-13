@@ -1,7 +1,7 @@
 import { Attendance, User } from '../../models/index.js';
 import fs from "fs";
 import moment from "moment";
-import {config} from 'dotenv';
+import { config } from 'dotenv';
 import Shift from '../../models/shift.js';
 import { Op } from 'sequelize';
 
@@ -16,24 +16,34 @@ class AttendanceController {
         const offset = limit * ((page == 0 ? 1 : page) - 1);
 
         const totalData = await Attendance.count({
-            where:{user_id: req.user.id}
-        }); 
+            where: { user_id: req.user.id }
+        });
 
         const totalPage = Math.ceil(totalData / limit);
 
         var data = await Attendance.findAll({
             offset: offset,
             limit: limit,
-            order:[
+            order: [
                 ['id', 'DESC']
             ],
-            include: {
-                model: Shift,
-                as: "shift"
-            }
+            include: [
+                {
+                    model: Shift,
+                    as: "shift"
+                },
+                {
+                    model: User,
+                    as: "user",
+                    attributes: {
+                        exclude: ["password", "token", "created_at", "updated_at",],
+                        include: ["id", "name", "email", "address", "is_verify", "role"],
+                    }
+                }
+            ]
         });
 
-        if(data){
+        if (data) {
             res.send({
                 success: true,
                 message: 'Success get data attendances',
@@ -44,17 +54,17 @@ class AttendanceController {
                     totalData: totalData,
                     totalPage: totalPage
                 }
-    
+
             });
         } else {
             res.send({
                 success: false,
                 message: 'Failed get data attendances!',
                 data: {}
-    
+
             });
         }
-      
+
     };
 
 }
