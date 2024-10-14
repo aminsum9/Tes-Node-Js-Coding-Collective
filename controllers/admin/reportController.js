@@ -16,8 +16,6 @@ class ReportController {
         var timezone = req.query.timezone || '';
         var convertTimezone = req.query.convertTimezone || '';
 
-        console.log("tes date: ", startDate + " 00:00:00")
-
         var data = await User.findAll({
             where: {
                 role: {
@@ -37,11 +35,8 @@ class ReportController {
                     as: "attendances",
                     where: [{
                         check_in_date: {
-                            [Op.gt]: startDate + " 00:00:00"
-                        },
-                        check_in_date: {
-                            [Op.lte]: endDate + " 23:59:59"
-                        },
+                            [Op.between]: [startDate + " 00:00:00", endDate + " 23:59:59"]
+                        }
                     },
                     timezone && { check_in_timezone: timezone }
                     ],
@@ -171,11 +166,8 @@ class ReportController {
                     as: "attendances",
                     where: [{
                         check_in_date: {
-                            [Op.gt]: startDate + " 00:00:00"
-                        },
-                        check_in_date: {
-                            [Op.lte]: endDate + " 23:59:59"
-                        },
+                            [Op.between]: [startDate + " 00:00:00", endDate + " 23:59:59"]
+                        }
                     },
                     timezone && { check_in_timezone: timezone }
                     ],
@@ -305,7 +297,7 @@ class ReportController {
             }
 
             res.setHeader('Content-Type', 'application/pdf');
-            res.setHeader('Content-Disposition', 'inline; filename="generated.pdf"');
+            res.setHeader('Content-Disposition', 'inline; filename="report.pdf"');
 
             res.send(buffer);
         });
