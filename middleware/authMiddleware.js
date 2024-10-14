@@ -45,7 +45,7 @@ const authMiddleware = (req, res, next) => {
         if (checkUser) {
             next();
         } else {
-            res.send({
+            res.status(400).send({
                 success: false,
                 message: "User not found!",
                 data: {}

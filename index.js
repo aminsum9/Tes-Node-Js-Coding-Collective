@@ -27,6 +27,7 @@ const port = process.env.PORT || 8000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+app.use('/images/', express.static(path.join(__dirname, '/images/')));
 app.use('/images/check_in', express.static(path.join(__dirname, '/images/check_in')));
 app.use('/images/check_out', express.static(path.join(__dirname, '/images/check_out')));
 

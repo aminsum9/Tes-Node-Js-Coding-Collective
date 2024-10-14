@@ -54,7 +54,7 @@ class ShiftAdminController {
         var desc = req.body.desc;
 
         if (!name) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'name required!',
                 data: {}
@@ -62,42 +62,42 @@ class ShiftAdminController {
         }
         if (!start_time) {
           
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'date required!',
                 data: {}
             });
         }
         if (!end_time) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'check_in required!',
                 data: {}
             });
         }
         if (!location) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'location required!',
                 data: {}
             });
         }
         if (!timezone) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'timezone required!',
                 data: {}
             });
         }
         if (!longitude) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'longitude required!',
                 data: {}
             });
         }
         if (!latitude) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'latitude required!',
                 data: {}

@@ -13,14 +13,14 @@ class AuthAdminController {
         var password = req.body.password;
 
         if (!email) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Email required!',
                 data: {}
             });
         }
         if (!password) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Password required!',
                 data: {}
@@ -46,7 +46,7 @@ class AuthAdminController {
             });
 
         if (!findUser) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'User not found!',
                 data: {}
@@ -56,7 +56,7 @@ class AuthAdminController {
         var checkPassword = await bcrypt.compare(password, findUser.password);
 
         if (!checkPassword) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Your password is incorrect!',
                 data: {}
@@ -129,7 +129,7 @@ class AuthAdminController {
             });
 
         if (findUser) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Email was used, please using another email!',
                 data: {}
@@ -175,7 +175,7 @@ class AuthAdminController {
                 }
             });
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 success: false,
                 message: 'Registration failed!',
                 data: {}
@@ -247,7 +247,7 @@ class AuthAdminController {
             });
 
         if (!findUser) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'User not found!',
                 data: {}
@@ -282,7 +282,7 @@ class AuthAdminController {
                 data: updatedUser
             });
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 success: false,
                 message: 'Failed update user!',
                 data: {}
@@ -336,7 +336,7 @@ class AuthAdminController {
             });
 
         if (!findUser) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'User not found!',
                 data: {}
@@ -347,7 +347,7 @@ class AuthAdminController {
         var checkPassword = await bcrypt.compare(oldPassword, findUser.password);
 
         if (!checkPassword) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Your oldPassword is incorrect!',
                 data: {}
@@ -356,7 +356,7 @@ class AuthAdminController {
 
         // check password == password conf
         if (newPassword != confPassword) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: "Your new password doesn't match with conf password!",
                 data: {}
@@ -381,7 +381,7 @@ class AuthAdminController {
                 data: {}
             });
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 success: false,
                 message: 'Failed update user password!',
                 data: {}
@@ -401,7 +401,7 @@ class AuthAdminController {
                 data: {}
             });
         } else {
-            res.status(500).json({
+            res.status(400).json({
                 success: false,
                 message: 'Logout user failed!',
                 data: {}

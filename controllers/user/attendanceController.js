@@ -114,7 +114,7 @@ class AttendanceController {
 
         if (!shift_id) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'shift_id required!',
                 data: {}
@@ -122,7 +122,7 @@ class AttendanceController {
         }
         if (!date) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'date required!',
                 data: {}
@@ -130,7 +130,7 @@ class AttendanceController {
         }
         if (!check_in) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'check_in required!',
                 data: {}
@@ -138,7 +138,7 @@ class AttendanceController {
         }
         if (!photo) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'photo required!',
                 data: {}
@@ -146,7 +146,7 @@ class AttendanceController {
         }
         if (!location) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'location required!',
                 data: {}
@@ -154,7 +154,7 @@ class AttendanceController {
         }
         if (!timezone) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'timezone required!',
                 data: {}
@@ -162,7 +162,7 @@ class AttendanceController {
         }
         if (!longitude) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'longitude required!',
                 data: {}
@@ -170,7 +170,7 @@ class AttendanceController {
         }
         if (!latitude) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'latitude required!',
                 data: {}
@@ -182,7 +182,7 @@ class AttendanceController {
         if(!findShift)
         {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Shift not found!',
                 data: {}
@@ -197,7 +197,7 @@ class AttendanceController {
         if(checkInDate != today)
             {
                 deleteFile(photo.path);
-                return res.status(500).json({
+                return res.status(400).json({
                     success: false,
                     message: 'Your check in date must be today!',
                     data: {}
@@ -217,7 +217,7 @@ class AttendanceController {
         if(checkCheckIn)
         {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'You already checked in!',
                 data: {}
@@ -258,7 +258,6 @@ class AttendanceController {
     checkOut = async (req, res) => {
 
         var attendance_id = req.body.attendance_id;
-        var shift_id = req.body.shift_id;
         var date = req.body.date;
         var check_out = req.body.check_out;
         var location = req.body.location;
@@ -279,30 +278,22 @@ class AttendanceController {
         const photo = req.file;
 
         if (!attendance_id) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'attendance_id required!',
                 data: {}
             });
         }
         if (!check_out) {
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'check_out required!',
                 data: {}
             });
         }
-        if (!shift_id) {
-            deleteFile(photo.path);
-            return res.status(500).json({
-                success: false,
-                message: 'shift_id required!',
-                data: {}
-            });
-        }
         if (!date) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'date required!',
                 data: {}
@@ -310,7 +301,7 @@ class AttendanceController {
         }
         if (!check_out) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'check_out required!',
                 data: {}
@@ -318,7 +309,7 @@ class AttendanceController {
         }
         if (!photo) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'photo required!',
                 data: {}
@@ -326,7 +317,7 @@ class AttendanceController {
         }
         if (!location) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'location required!',
                 data: {}
@@ -334,7 +325,7 @@ class AttendanceController {
         }
         if (!timezone) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'timezone required!',
                 data: {}
@@ -342,7 +333,7 @@ class AttendanceController {
         }
         if (!longitude) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'longitude required!',
                 data: {}
@@ -350,7 +341,7 @@ class AttendanceController {
         }
         if (!latitude) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'latitude required!',
                 data: {}
@@ -370,17 +361,29 @@ class AttendanceController {
                         'user_id',
                         'check_in_date',
                         'check_in_time',
-                        'check_out_time',
+                        'check_in_time',
+                        'check_in_timezone',
                         'check_in_location',
                         'check_in_longitude',
-                        'check_in_latitude'
+                        'check_in_latitude',
+                        'check_in_ip_address',
+                        'check_in_desc',
+                        'check_out_date',
+                        'check_out_time',
+                        'check_out_time',
+                        'check_out_timezone',
+                        'check_out_location',
+                        'check_out_longitude',
+                        'check_out_latitude',
+                        'check_out_ip_address',
+                        'check_out_desc',
                     ],
                 },
             });
 
         if (!findAttendance) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Data attendance not found!',
                 data: {}
@@ -411,9 +414,9 @@ class AttendanceController {
 
         if (!checkCheckOut) {
             deleteFile(photo.path);
-            return res.status(500).json({
+            return res.status(400).json({
                 success: false,
-                message: 'User already check out!',
+                message: 'User already checked out!',
                 data: {}
             });
         }
