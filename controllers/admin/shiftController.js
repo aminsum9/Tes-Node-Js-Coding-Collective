@@ -107,7 +107,7 @@ class ShiftAdminController {
         
         var shift = new Shift();
 
-        shift.name = shift_id;
+        shift.name = name;
         shift.start_time = start_time;
         shift.end_time = end_time;
         shift.location = location;
