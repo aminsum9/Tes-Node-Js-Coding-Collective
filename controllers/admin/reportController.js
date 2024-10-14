@@ -22,9 +22,6 @@ class ReportController {
                     [Op.ne]: "Admin"
                 }
             },
-            order: [
-                ['id', 'DESC']
-            ],
             attributes: {
                 exclude: ["password", "token", "created_at", "updated_at",],
                 include: ["id", "name", "email", "address", "is_verify", "role"],
@@ -45,9 +42,10 @@ class ReportController {
                             model: Shift,
                             as: "shift"
                         }
-                    ]
+                    ],
                 },
             ],
+            order: [[{ model: Attendance, as: 'attendances' }, 'id', 'DESC']] 
         });
 
         var resutlData = [];
@@ -145,17 +143,12 @@ class ReportController {
         var timezone = req.query.timezone || '';
         var convertTimezone = req.query.convertTimezone || '';
 
-        console.log("tes date: ", startDate + " 00:00:00")
-
         var data = await User.findAll({
             where: {
                 role: {
                     [Op.ne]: "Admin"
                 }
             },
-            order: [
-                ['id', 'DESC']
-            ],
             attributes: {
                 exclude: ["password", "token", "created_at", "updated_at",],
                 include: ["id", "name", "email", "address", "is_verify", "role"],
@@ -179,6 +172,7 @@ class ReportController {
                     ]
                 },
             ],
+            order: [[{ model: Attendance, as: 'attendances' }, 'id', 'DESC']] 
         });
 
         var resutlData = [];
@@ -280,9 +274,14 @@ class ReportController {
                 textPDF += `<div>`;
                 textPDF += `<p style="font-size: 10px; font-weight: bold" >${j + 1}. ${e.shift?.name} (${e.shift?.start_time} - ${e.shift?.end_time})</p>\n`;
                 textPDF += `<p style="font-size: 10px">Check In: ${moment(e.check_in_date).format('dddd, DD MMMM YYYY')} at ${e.check_in_time} (${e.check_in_timezone})</p>\n`;
-                textPDF += `<p style="font-size: 10px" >Check Out: ${moment(e.check_out_date).format('dddd, DD MMMM YYYY')} at ${e.check_out_time} (${e.check_out_timezone})</p>\n`;
+                if(e.check_out_date)
+                {
+                    textPDF += `<p style="font-size: 10px" >Check Out: ${moment(e.check_out_date).format('dddd, DD MMMM YYYY')} at ${e.check_out_time} (${e.check_out_timezone})</p>\n`;
+                }
                 textPDF += `<p style="font-size: 10px" >Check In Location: ${e.check_in_location} (${e.check_in_latitude},${e.check_in_longitude})</p>\n`;
-                textPDF += `<p style="font-size: 10px" >Check Out Location: ${e.check_out_location} (${e.check_out_latitude},${e.check_out_longitude})</p>\n`;
+                if(e.check_out_location){
+                    textPDF += `<p style="font-size: 10px" >Check Out Location: ${e.check_out_location} (${e.check_out_latitude},${e.check_out_longitude})</p>\n`;
+                }
                 textPDF += `</div>\n`;
             }
         }
