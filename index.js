@@ -96,6 +96,7 @@ app.group('/api', (router) => {
 
         router.group('/admin', (router) => {
             router.get('/', adminMiddleware, new shiftAdminController().getShifts);
+            router.get('/add', adminMiddleware, new shiftAdminController().addShift);
         })
     });
 

@@ -7,4 +7,4 @@ Attendance.associate({ User, Shift });
 
 Shift.associate({ Attendance });
 
-export { User, Attendance };
+export { User, Attendance, Shift };

@@ -15,9 +15,7 @@ class AttendanceController {
         const limit = parseInt(req.query.limit) || 10;
         const offset = limit * ((page == 0 ? 1 : page) - 1);
 
-        const totalData = await Attendance.count({
-            where: { user_id: req.user.id }
-        });
+        const totalData = await Attendance.count();
 
         const totalPage = Math.ceil(totalData / limit);
 
